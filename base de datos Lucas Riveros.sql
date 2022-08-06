@@ -29,6 +29,15 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `Portfolio`.`Tecnologias`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Portfolio`.`Tecnologias` (
+  `id` INT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `Portfolio`.`Persona`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Portfolio`.`Persona` (
@@ -42,11 +51,18 @@ CREATE TABLE IF NOT EXISTS `Portfolio`.`Persona` (
   `sobre_mi` VARCHAR(200) NULL,
   `url_foto` VARCHAR(100) NULL,
   `Domicilio_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `Domicilio_id`),
+  `Tecnologias_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `Domicilio_id`, `Tecnologias_id`),
   INDEX `fk_Persona_Domicilio1_idx` (`Domicilio_id` ASC) VISIBLE,
+  INDEX `fk_Persona_Tecnologias1_idx` (`Tecnologias_id` ASC) VISIBLE,
   CONSTRAINT `fk_Persona_Domicilio1`
     FOREIGN KEY (`Domicilio_id`)
     REFERENCES `Portfolio`.`Domicilio` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Persona_Tecnologias1`
+    FOREIGN KEY (`Tecnologias_id`)
+    REFERENCES `Portfolio`.`Tecnologias` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -110,29 +126,13 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Portfolio`.`Tecnologias`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Portfolio`.`Tecnologias` (
-  `id` INT NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `Portfolio`.`Usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Portfolio`.`Usuarios` (
   `id` INT NOT NULL,
   `usuario` VARCHAR(15) NULL,
   `contraseña` VARCHAR(15) NULL,
-  `Tecnologias_id` INT NOT NULL,
-  PRIMARY KEY (`id`, `Tecnologias_id`),
-  INDEX `fk_Usuarios_Tecnologias1_idx` (`Tecnologias_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Usuarios_Tecnologias1`
-    FOREIGN KEY (`Tecnologias_id`)
-    REFERENCES `Portfolio`.`Tecnologias` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
